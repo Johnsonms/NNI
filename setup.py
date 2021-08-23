@@ -90,7 +90,7 @@ def _setup():
             'nni': _find_requirements_txt() + _find_default_config(),  # setuptools issue #1806
             'nni_node': _find_node_files()  # note: this does not work before building
         },
-
+        data_files = _get_data_files(),
         python_requires = '>=3.6',
         install_requires = _read_requirements_txt('dependencies/required.txt'),
         extras_require = {
@@ -115,6 +115,10 @@ def _setup():
         }
     )
 
+def _get_data_files():
+    extension_file = glob.glob("nni_node/jupyter-extension/extensions/nni-jupyter-extension*.tgz")
+    data_files = [('share/jupyter/lab/extensions', extension_file)]
+    return data_files
 
 def _find_python_packages():
     packages = []
